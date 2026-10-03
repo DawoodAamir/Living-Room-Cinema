@@ -31,3 +31,5 @@ bash Scripts/test-ui.sh
 The simulator tests use bundled media. Network availability, codecs, subtitle/audio selection, AirPlay, physical remote behavior, and interruption handling require device checks. This is a portfolio playback app without DRM, purchases, live channels, user-uploaded media, or a commercial content license.
 
 See [verification](Docs/Verification.md), [privacy](PRIVACY.md), and [contributing](CONTRIBUTING.md). Code and original media are MIT licensed. Apple’s remote example remains subject to its source terms: [HLS examples](https://developer.apple.com/streaming/examples/).
+
+![Original offline video in the native TV player](Docs/Playback.png)
