@@ -1,0 +1,38 @@
+name: Checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native:
+    runs-on: xcode-27
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - name: Core tests
+        run: swift test && swift test -c release
+      - name: Release simulator and device builds
+        run: |
+          xcodebuild -project 'Living Room Cinema.xcodeproj' -scheme 'Living Room Cinema' -configuration Release -destination 'generic/platform=tvOS Simulator' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build
+          xcodebuild -project 'Living Room Cinema.xcodeproj' -scheme 'Living Room Cinema' -configuration Release -destination 'generic/platform=tvOS' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build
+      - name: Ensure tvOS runtime
+        run: |
+          xcrun simctl list runtimes --json > /tmp/runtimes.json
+          if ! python3 -c 'import json; r=json.load(open("/tmp/runtimes.json"))["runtimes"]; raise SystemExit(not any(x.get("isAvailable") and x.get("version", "").startswith("27.") and ("tvOS" in x["identifier"]) for x in r))'; then
+            xcodebuild -downloadPlatform tvOS -buildVersion 27.0 -architectureVariant arm64
+          fi
+      - name: Native workflow
+        run: bash Scripts/test-ui.sh
+      - name: Test evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: native-workflow
+          path: |
+            build/Screenshots
+            build/*.xcresult
+          if-no-files-found: ignore
