@@ -23,7 +23,16 @@ import XCTest
     add(screenshot)
     select(app.buttons["play"], in: app)
     XCTAssertFalse(app.staticTexts["Playback unavailable"].waitForExistence(timeout: 5))
+    let playback = XCTAttachment(screenshot: app.screenshot())
+    playback.name = "Offline playback"
+    playback.lifetime = .keepAlways
+    add(playback)
     XCUIRemote.shared.press(.menu)
+    XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 10), app.debugDescription)
+    app.terminate()
+    app.launch()
+    select(app.buttons["title-orbit"], in: app)
+    XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 10), app.debugDescription)
   }
   private func select(_ target: XCUIElement, in app: XCUIApplication) {
     for _ in 0..<24 {

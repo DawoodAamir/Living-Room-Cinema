@@ -12,12 +12,12 @@ struct CinemaTitle: Identifiable, Hashable, Sendable {
     .init(
       id: "orbit", name: "Orbit Study", subtitle: "Original motion study · 24 seconds",
       detail:
-        "A quiet geometric orbit, generated entirely for this project. Available offline with no audio track.",
+        "A quiet study of looping geometric orbits. Silent and available offline.",
       symbol: "circle.hexagongrid", file: "Orbit", remote: nil),
     .init(
       id: "tidal", name: "Tidal Lines", subtitle: "Original motion study · 24 seconds",
       detail:
-        "A field of flowing lines. Original procedural artwork, bundled for offline playback. No audio track.",
+        "A field of gently flowing lines. Silent and available offline.",
       symbol: "water.waves", file: "Tidal", remote: nil),
     .init(
       id: "bipbop", name: "Apple HLS Example", subtitle: "Developer test stream · network required",

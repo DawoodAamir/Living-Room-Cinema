@@ -2,6 +2,8 @@
 
 A native tvOS media browser with remote focus navigation, AVKit playback, local favorites, and resumable viewing history.
 
+![Native Apple TV title screen](Docs/Title.png)
+
 ## Run
 
 Open **Living Room Cinema.xcodeproj** with Xcode 27. The app targets tvOS 27 and uses `com.dd.livingroomcinema`. Run on the Apple TV simulator or select your own development team for a physical Apple TV. No signing identity is included.
